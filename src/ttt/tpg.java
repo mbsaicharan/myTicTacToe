@@ -1,3 +1,7 @@
+package ttt;
+
+import java.awt.event.ActionListener;
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -155,6 +159,18 @@ public class tpg extends javax.swing.JFrame {
     /**
      * @param args the command line arguments
      */
+    
+    void resetListener(ActionListener al)
+    {
+        jButton10.addActionListener(al);
+    }
+    
+    void menuListener(ActionListener al)
+    {
+        jButton11.addActionListener(al);
+    }
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

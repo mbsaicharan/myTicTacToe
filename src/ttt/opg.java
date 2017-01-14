@@ -1,8 +1,7 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package ttt;
+
+import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 /**
  *
@@ -14,6 +13,7 @@ public class opg extends javax.swing.JFrame {
      * Creates new form opg
      */
     public opg() {
+        this.buttonArray = new JButton[]{jB1, jB2, jB3, jB4, jB5, jB6, jB7, jB8, jB9};
         initComponents();
     }
 
@@ -160,7 +160,47 @@ public class opg extends javax.swing.JFrame {
     private void jB1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jB1ActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jB1ActionPerformed
-
+    
+    
+    /****************************Variables*************************************/
+    JButton[] buttonArray; 
+    
+    void setX(int n)
+    {
+       // System.out.println("hi");
+        buttonArray[n].setText("X");
+    }
+    
+    void setO(int n)
+    {
+        buttonArray[n].setText("O");
+    }
+    
+    char[] getBoard()
+    {
+        char board[] = new char[9];
+        for(int i = 0; i< 9; i++)
+        {
+            board[i] = buttonArray[i].getText().charAt(0);
+        }
+        return board;
+    }
+    
+    void buttonsListener(ActionListener al)
+    {
+        for(int i=0;i<9;i++)
+            buttonArray[i].addActionListener(al);
+    }
+    
+    void resetListener(ActionListener al)
+    {
+        jButton10.addActionListener(al);
+    }
+    
+    void menuListener(ActionListener al)
+    {
+        jButton11.addActionListener(al);
+    }
     /**
      * @param args the command line arguments
      */

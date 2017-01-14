@@ -1,8 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+package ttt;
+
+import java.awt.event.ActionListener;
 
 /**
  *
@@ -16,7 +14,16 @@ public class menu extends javax.swing.JFrame {
     public menu() {
         initComponents();
     }
-
+    
+    void b1Listener(ActionListener al)
+    {
+        jButton1.addActionListener(al);
+    }
+    
+    void b2Listener(ActionListener al)
+    {
+        jButton2.addActionListener(al);
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always

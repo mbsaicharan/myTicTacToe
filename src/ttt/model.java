@@ -1,15 +1,25 @@
 package ttt;
 
-
 class Move
 {
-	int row, col;
+	public int row, col;
 }
 
 class model
 {
-    char player = 'x', opponent = 'o';
-
+    char player, opponent;
+    char board1[][];
+    Move bestMove; 
+    model()
+    {
+        player = 'O'; opponent = 'X';
+        board1 = new char[3][3];
+        for(int i=0 ;i<3;i++)
+            for(int j=0;j<3;j++)
+                board1[i][j]= ' ';
+        bestMove = new Move();
+    }
+     
     // This function returns true if there are moves
     // remaining on the board. It returns false if
     // there are no moves left to play.
@@ -17,13 +27,29 @@ class model
     {
 	for (int i = 0; i<3; i++)
 		for (int j = 0; j<3; j++)
-			if (board[i][j]=='_')
+			if (board[i][j]==' ')
 				return true;
 	return false;
     }
 
-    // This is the evaluation function as discussed
-    // in the previous article ( http://goo.gl/sJgv68 )
+    int finalResult(char boardTemp[])
+    {
+        int n;
+        char board2[][] = new char[3][3];
+        for(int i = 0,k=0;i <3; i++)
+             for(int j=0 ;j<3;j++)
+                board2[i][j] = boardTemp[k++];
+        if(!isMovesLeft(board2))
+            return 1;
+        n = evaluate(board2);
+        if(n==10)
+            return 2;
+        else if(n==-10)
+            return 3;
+        else 
+            return 0;
+    }
+
     int evaluate(char b[][])
     {
 	// Checking for Rows for X or O victory.
@@ -84,12 +110,12 @@ int minimax(char board[][], int depth, boolean isMax)
 	// If Maximizer has won the game return his/her
 	// evaluated score
 	if (score == 10)
-		return score;
+		return score - depth;
 
 	// If Minimizer has won the game return his/her
 	// evaluated score
 	if (score == -10)
-		return score;
+		return score + depth;
 
 	// If there are no more moves and no winner then
 	// it is a tie
@@ -107,10 +133,10 @@ int minimax(char board[][], int depth, boolean isMax)
 			for (int j = 0; j<3; j++)
 			{
 				// Check if cell is empty
-				if (board[i][j]=='_')
+				if (board[i][j]==' ')
 				{
 					// Make the move
-					board[i][j] = player;
+ 					board[i][j] = player;
 
 					// Call minimax recursively and choose
 					// the maximum value
@@ -118,7 +144,7 @@ int minimax(char board[][], int depth, boolean isMax)
 						minimax(board, depth+1, !isMax) );
 
 					// Undo the move
-					board[i][j] = '_';
+					board[i][j] = ' ';
 				}
 			}
 		}
@@ -136,7 +162,7 @@ int minimax(char board[][], int depth, boolean isMax)
 			for (int j = 0; j<3; j++)
 			{
 				// Check if cell is empty
-				if (board[i][j]=='_')
+				if (board[i][j]==' ')
 				{
 					// Make the move
 					board[i][j] = opponent;
@@ -147,7 +173,7 @@ int minimax(char board[][], int depth, boolean isMax)
 						minimax(board, depth+1, !isMax));
 
 					// Undo the move
-					board[i][j] = '_';
+					board[i][j] = ' ';
 				}
 			}
 		}
@@ -156,32 +182,33 @@ int minimax(char board[][], int depth, boolean isMax)
 }
 
 // This will return the best possible move for the player
-Move findBestMove(char board[][])
+int findBestMove(char boardTemp[])
 {
+        for(int i = 0,k=0;i <3; i++)
+            for(int j=0 ;j<3;j++)
+                board1[i][j] = boardTemp[k++];
 	int bestVal = -1000;
-	Move bestMove = new Move();
 	bestMove.row = -1;
 	bestMove.col = -1;
-
 	// Traverse all cells, evalutae minimax function for
 	// all empty cells. And return the cell with optimal
 	// value.
 	for (int i = 0; i<3; i++)
 	{
 		for (int j = 0; j<3; j++)
-		{
-			// Check if celll is empty
-			if (board[i][j]=='_')
+                {
+			// Check if cell is empty
+			if (board1[i][j]==' ')
 			{
 				// Make the move
-				board[i][j] = player;
+				board1[i][j] = player;
 
 				// compute evaluation function for this
 				// move.
-				int moveVal = minimax(board, 0, false);
+				int moveVal = minimax(board1, 0, false);
 
 				// Undo the move
-				board[i][j] = '_';
+				board1[i][j] = ' ';
 
 				// If the value of the current move is
 				// more than the best value, then update
@@ -196,9 +223,8 @@ Move findBestMove(char board[][])
 		}
 	}
 
-	//printf("The value of the best Move is : %d\n\n",
-	//		bestVal);
-
-	return bestMove;
+        //converting 2-d array index to 1-d array index
+        return 3*bestMove.row + bestMove.col + 1;
+        
 }
 }

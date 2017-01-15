@@ -10,7 +10,7 @@ public class tictactoe {
         menu m = new menu();
         opg o = new opg();
         tpg t = new tpg();
-        presentation p = new presentation(m,o,t);
-        
+        model mo = new model();
+        presentation p = new presentation(m,o,t,mo);
     }
 }

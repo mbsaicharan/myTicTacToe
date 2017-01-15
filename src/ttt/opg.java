@@ -13,10 +13,11 @@ public class opg extends javax.swing.JFrame {
      * Creates new form opg
      */
     public opg() {
-        this.buttonArray = new JButton[]{jB1, jB2, jB3, jB4, jB5, jB6, jB7, jB8, jB9};
         initComponents();
+        initialize();
+        
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -161,35 +162,36 @@ public class opg extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jB1ActionPerformed
     
-    
-    /****************************Variables*************************************/
-    JButton[] buttonArray; 
-    
-    void setX(int n)
+    void initialize()
     {
-       // System.out.println("hi");
-        buttonArray[n].setText("X");
-    }
-    
-    void setO(int n)
-    {
-        buttonArray[n].setText("O");
+        board = new char[9];
+        buttonArray = new JButton[]{jB1,jB2,jB3, jB4, jB5, jB6, jB7, jB8, jB9};
+        for(int i=0;i<9;i++)
+        {
+            board[i] = ' ';
+            buttonArray[i].setText(" ");
+        }
+        
     }
     
     char[] getBoard()
     {
-        char board[] = new char[9];
         for(int i = 0; i< 9; i++)
-        {
             board[i] = buttonArray[i].getText().charAt(0);
-        }
         return board;
+    }
+    
+    JButton getButton(int n)
+    {
+        return buttonArray[n]; 
     }
     
     void buttonsListener(ActionListener al)
     {
-        for(int i=0;i<9;i++)
-            buttonArray[i].addActionListener(al);
+        for (JButton buttonArray1 : buttonArray) {
+            buttonArray1.addActionListener(al);
+        }
+        
     }
     
     void resetListener(ActionListener al)
@@ -200,6 +202,16 @@ public class opg extends javax.swing.JFrame {
     void menuListener(ActionListener al)
     {
         jButton11.addActionListener(al);
+    }
+    
+    void setX(int n)
+    {
+        buttonArray[n].setText("X");
+    }
+    
+    void setO(int n)
+    {
+        buttonArray[n].setText("O");
     }
     /**
      * @param args the command line arguments
@@ -217,15 +229,11 @@ public class opg extends javax.swing.JFrame {
                     break;
                 }
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(opg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(opg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(opg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+        } catch (ClassNotFoundException | InstantiationException | IllegalAccessException | javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(opg.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
+        
         //</editor-fold>
 
         /* Create and display the form */
@@ -251,4 +259,6 @@ public class opg extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
+    private JButton[] buttonArray;
+    private char[] board; 
 }

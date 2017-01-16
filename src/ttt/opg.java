@@ -14,8 +14,7 @@ public class opg extends javax.swing.JFrame {
      */
     public opg() {
         initComponents();
-        initialize();
-        
+        initialize();    
     }
     
     /**

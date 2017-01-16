@@ -1,6 +1,7 @@
 package ttt;
 
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
 
 /*
  * To change this license header, choose License Headers in Project Properties.
@@ -19,6 +20,7 @@ public class tpg extends javax.swing.JFrame {
      */
     public tpg() {
         initComponents();
+        initialize();  
     }
 
     /**
@@ -170,6 +172,46 @@ public class tpg extends javax.swing.JFrame {
         jButton11.addActionListener(al);
     }
     
+    void initialize()
+    {
+        board = new char[9];
+        buttonArray = new JButton[]{jB1,jB2,jB3, jB4, jB5, jB6, jB7, jB8, jB9};
+        for(int i=0;i<9;i++)
+        {
+            board[i] = ' ';
+            buttonArray[i].setText(" ");
+        }
+        
+    }
+    
+    char[] getBoard()
+    {
+        for(int i = 0; i< 9; i++)
+            board[i] = buttonArray[i].getText().charAt(0);
+        return board;
+    }
+    
+    JButton getButton(int n)
+    {
+        return buttonArray[n]; 
+    }
+    
+    void buttonsListener(ActionListener al)
+    {
+        for (JButton buttonArray1 : buttonArray) {
+            buttonArray1.addActionListener(al);
+        }    
+    }
+    
+    void setX(int n)
+    {
+        buttonArray[n].setText("X");
+    }
+    
+    void setO(int n)
+    {
+        buttonArray[n].setText("O");
+    }
     
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
@@ -218,4 +260,6 @@ public class tpg extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
+    private JButton[] buttonArray;
+    private char[] board; 
 }

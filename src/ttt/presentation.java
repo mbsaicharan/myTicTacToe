@@ -7,8 +7,6 @@ package ttt;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import javax.swing.JButton;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 /**
@@ -22,6 +20,7 @@ public class presentation {
     opg o;
     tpg t;
     model mo;
+    static boolean player1 = true;
     public presentation(menu m,opg o,tpg t,model mo)
     {
         this.m = m;
@@ -34,9 +33,10 @@ public class presentation {
         m.setVisible(true);
         o.resetListener(new resetO());
         o.menuListener(new menuOAL());
-       // t.resetListener(new resetT());
+        t.resetListener(new resetT());
         t.menuListener(new menuTAL());
         o.buttonsListener(new buttonAction());
+        t.buttonsListener(new buttonActionTPG());
     }
     
     class opgButton implements ActionListener
@@ -64,6 +64,14 @@ public class presentation {
             o.initialize();
         }
     }
+
+    class resetT implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e)
+        {
+            t.initialize();
+        }
+    }
     
     class menuOAL implements ActionListener
     {
@@ -81,6 +89,7 @@ public class presentation {
         {
             m.setVisible(true);
             t.dispose();
+            t.initialize();
         }
     }
     
@@ -97,7 +106,7 @@ public class presentation {
             n = mo.finalResult(board);
             switch (n) {
                 case 1:
-                    JOptionPane.showMessageDialog(o, "Draw1");
+                    JOptionPane.showMessageDialog(o, "Draw");
                     
                     break;
                 case 3:
@@ -114,7 +123,7 @@ public class presentation {
                 n = mo.finalResult(board);
             }catch(Exception ex)
             {
-                //do nothing This is to handle arrayout of bound exception 
+                //do nothing .This is to handle arrayout of bound exception 
                 //which occurs when there is a draw
             }
             switch (n) {
@@ -126,6 +135,54 @@ public class presentation {
             }
             
         } 
+    }
+    
+    class buttonActionTPG implements ActionListener
+    {
+        public void actionPerformed(ActionEvent e1)
+        {
+            int i,m,n;
+            for(i = 0 ;i<9;i++)
+                if(e1.getSource().equals(t.getButton(i)))
+                    break;
+            try{
+            if(player1)
+            {    
+                player1 = false;
+                t.setX(i);
+                board = t.getBoard();
+                n = mo.finalResult(board);
+                switch (n) {
+                    case 1:
+                        JOptionPane.showMessageDialog(t, "Draw");
+                        break;
+                    case 3:
+                        JOptionPane.showMessageDialog(t,  "Player 1 wins");
+                    default:
+                        break;
+                }
+            }
+            else
+            {   
+                player1 = true;
+                t.setO(i);
+                board = t.getBoard();
+                n = mo.finalResult(board);
+                switch (n) {
+                    case 1:
+                        JOptionPane.showMessageDialog(t, "Draw");
+                        break;
+                    case 2:
+                        JOptionPane.showMessageDialog(t,  "Player 2 wins");
+                    default:
+                        break;
+                }
+            }
+            }catch(Exception exc)
+            {
+                        //Do nothing.This is to handle ArrayOutOfBoundException
+            }
+        }
     }
 }
 
